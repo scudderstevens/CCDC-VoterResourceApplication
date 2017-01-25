@@ -1,0 +1,76 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Election Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <h1 style="text-align:center;">{{ userdata?.election?.name }}</h1>
+  <h2 style="text-align:center;">{{ userdata?.election?.electionDay }}</h2>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col width-10>
+        <ion-icon name="ios-pin"></ion-icon>
+      </ion-col>
+      <ion-col width-90>
+        <span class="item-note">Your Polling Location</span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list *ngFor="let location of userdata?.pollingLocations">
+    <ion-item>{{ location?.address?.locationName }}</ion-item>
+    <ion-item>{{ location?.address?.line1 }}</ion-item>
+    <ion-item>{{ location?.address?.city }}</ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col width-10>
+        <ion-icon name="ios-people"></ion-icon>
+      </ion-col>
+      <ion-col width-90>
+        <span>Political Contests</span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list *ngFor="let contest of userdata?.contests">
+    <ion-grid>
+      <ion-row>
+        <ion-col width-10>
+          <ion-icon name="ios-person"></ion-icon>
+        </ion-col>
+        <ion-col width-90>
+          <span>{{ contest?.office }}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list *ngFor="let candidate of contest.candidates">
+      <span *ngIf="candidate?.party == display">
+        <ion-card>
+          <ion-card-header>
+            {{ candidate?.party }}
+          </ion-card-header>
+          <ion-card-content>
+            <h2>{{ candidate?.name }}</h2>
+            <a *ngIf="candidate?.candidateUrl" href="{{ candidate?.candidateUrl }}"><ion-icon name="ios-link"></ion-icon></a> <a *ngIf="candidate?.candidateUrl" href="{{ candidate?.candidateUrl }}">{{ candidate?.candidateUrl }}</a>
+          </ion-card-content>
+        </ion-card>
+      </span>
+    </ion-list>
+  </ion-list>
+
+  <div>
+    <h6>Search Results For:</h6>
+    {{ userdata?.normalizedInput?.line1 }}
+    {{ userdata?.normalizedInput?.city }}
+    {{ userdata?.normalizedInput?.state }}
+    {{ userdata?.normalizedInput?.zip }}
+  </div>
+
+</ion-content>
